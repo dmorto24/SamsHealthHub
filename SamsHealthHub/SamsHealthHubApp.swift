@@ -25,7 +25,7 @@ struct SamsHealthHubApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            IndexView()
         }
         .modelContainer(sharedModelContainer)
     }

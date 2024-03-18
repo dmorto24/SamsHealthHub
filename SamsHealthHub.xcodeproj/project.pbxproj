@@ -12,6 +12,11 @@
 		954041DD2BA0ED610035A396 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954041DC2BA0ED610035A396 /* Item.swift */; };
 		954041DF2BA0ED620035A396 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 954041DE2BA0ED620035A396 /* Assets.xcassets */; };
 		954041E22BA0ED620035A396 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 954041E12BA0ED620035A396 /* Preview Assets.xcassets */; };
+		ED9D082D2BA8E17B00304476 /* index.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D08282BA8E17B00304476 /* index.swift */; };
+		ED9D082E2BA8E17B00304476 /* GoalEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D08292BA8E17B00304476 /* GoalEditView.swift */; };
+		ED9D082F2BA8E17B00304476 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D082A2BA8E17B00304476 /* SettingsView.swift */; };
+		ED9D08302BA8E17B00304476 /* ItemSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D082B2BA8E17B00304476 /* ItemSearchView.swift */; };
+		ED9D08312BA8E17B00304476 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D082C2BA8E17B00304476 /* SideMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +26,11 @@
 		954041DC2BA0ED610035A396 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		954041DE2BA0ED620035A396 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		954041E12BA0ED620035A396 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ED9D08282BA8E17B00304476 /* index.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = index.swift; path = ../../toAdd/index.swift; sourceTree = "<group>"; };
+		ED9D08292BA8E17B00304476 /* GoalEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoalEditView.swift; path = ../../toAdd/GoalEditView.swift; sourceTree = "<group>"; };
+		ED9D082A2BA8E17B00304476 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = ../../toAdd/SettingsView.swift; sourceTree = "<group>"; };
+		ED9D082B2BA8E17B00304476 /* ItemSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemSearchView.swift; path = ../../toAdd/ItemSearchView.swift; sourceTree = "<group>"; };
+		ED9D082C2BA8E17B00304476 /* SideMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideMenuView.swift; path = ../../toAdd/SideMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +64,11 @@
 			isa = PBXGroup;
 			children = (
 				954041D82BA0ED610035A396 /* SamsHealthHubApp.swift */,
+				ED9D08292BA8E17B00304476 /* GoalEditView.swift */,
+				ED9D08282BA8E17B00304476 /* index.swift */,
+				ED9D082B2BA8E17B00304476 /* ItemSearchView.swift */,
+				ED9D082A2BA8E17B00304476 /* SettingsView.swift */,
+				ED9D082C2BA8E17B00304476 /* SideMenuView.swift */,
 				954041DA2BA0ED610035A396 /* ContentView.swift */,
 				954041DC2BA0ED610035A396 /* Item.swift */,
 				954041DE2BA0ED620035A396 /* Assets.xcassets */,
@@ -141,7 +156,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				954041DB2BA0ED610035A396 /* ContentView.swift in Sources */,
+				ED9D08302BA8E17B00304476 /* ItemSearchView.swift in Sources */,
+				ED9D08312BA8E17B00304476 /* SideMenuView.swift in Sources */,
 				954041DD2BA0ED610035A396 /* Item.swift in Sources */,
+				ED9D082D2BA8E17B00304476 /* index.swift in Sources */,
+				ED9D082F2BA8E17B00304476 /* SettingsView.swift in Sources */,
+				ED9D082E2BA8E17B00304476 /* GoalEditView.swift in Sources */,
 				954041D92BA0ED610035A396 /* SamsHealthHubApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
