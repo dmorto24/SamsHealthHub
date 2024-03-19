@@ -8,15 +8,21 @@ import SwiftUI
 
 struct ItemSearchView: View {
     @ObservedObject var model = ItemViewModel()
+    @State private var searchText = ""
+    
     var body: some View {
-        List (model.list){
-            item in Text(item.name)
+        NavigationView{
+            List (model.filteredItems(for: searchText)){
+                item in Text(item.name)
+            }
+            .searchable(text: $searchText)
         }
     }
     init(){
         model.getItems()
     }
 }
+
 
 #Preview {
     ItemSearchView()
