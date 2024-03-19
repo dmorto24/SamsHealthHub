@@ -36,4 +36,12 @@ class ItemViewModel: ObservableObject {
             }
         }
     }
+    func filteredItems(for searchText: String) -> [ItemModel] {
+        if searchText.isEmpty {
+            return list // Return all items if search text is empty
+        } else {
+            return list.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+
 }
