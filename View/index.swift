@@ -3,21 +3,38 @@
 //  SamsHealthHub
 //
 //  Created by Cole Clavey on 3/18/24.
-// 
+//
 import SwiftUI
 
 struct IndexView: View {
     @State private var showMenu: Bool = false
-
+    @State private var userHasGoals: Bool = false
+    
     var body: some View {
+        //if userHasGoals == true{
+            
+        //}
+        //else{
+            
+        //}
+        
+        
+        
         NavigationView {
             ZStack{
                 VStack {
                     Spacer()
-                    
-                    NavigationLink(destination: GoalEditView()) {
-                        ButtonView(title: "Goals")
+                    if userHasGoals == true {
+                        NavigationLink(destination: ContentView()) {
+                            ButtonView(title: "Goals")
+                        }
                     }
+                    else {
+                        NavigationLink(destination: ContentView()) {
+                            ButtonView(title: "Add Goals")
+                        }
+                    }
+                    
                     
                     Spacer()
                         .frame(height: 20)
@@ -28,6 +45,7 @@ struct IndexView: View {
                     
                     Spacer()
                 }
+                .padding()
                 
                 GeometryReader { _ in
                     HStack{
@@ -38,28 +56,20 @@ struct IndexView: View {
                 }
                 .background(Color.black.opacity(showMenu ? 0.5 : 0))
             }
-                .navigationTitle("Index Page")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar{
-                    
-                    Button{
-                        self.showMenu.toggle()
-                    } label: {
-                        
-                        if showMenu{
-                            Image(systemName: "xmark")
-                                .font(.title)
-                                .foregroundColor(.red)
-                        }
-                        else{
-                            Image(systemName: "text.justify")
-                                .font(.title)
-                        }
-                    }
+            .toolbar {
+                Button(action: {
+                    self.showMenu.toggle()
+                }) {
+                    Image(systemName: showMenu ? "xmark" : "text.justify")
+                        .font(.title)
+                        .foregroundColor(showMenu ? .red : .primary)
                 }
+            }
         }
     }
 }
+
+
 
 struct ButtonView: View {
     let title: String
