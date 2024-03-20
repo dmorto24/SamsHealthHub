@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct SideMenuView: View {
-    
     var body: some View {
-        VStack {
-            Text("Settings")
-                .font(.title)
-                .foregroundColor(.white)
+        VStack(spacing: 65) {
+            NavigationLink(destination: SettingsView()) {
+                Text("Settings")
+                    .font(.title)
+                    .foregroundColor(.white)
+            }
+    
+            NavigationLink(destination: GoalEditView()) {
+                Text("Change Goal")
+                    .font(.title)
+                    .foregroundColor(.white)
+            }
             
             Spacer()
         }
