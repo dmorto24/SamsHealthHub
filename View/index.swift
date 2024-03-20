@@ -11,12 +11,12 @@ struct IndexView: View {
     @State private var userHasGoals: Bool = false
     
     var body: some View {
-        //if userHasGoals == true{
+        if userHasGoals == true{
             
-        //}
-        //else{
+        }
+        else{
             
-        //}
+        }
         
         
         
@@ -25,12 +25,12 @@ struct IndexView: View {
                 VStack {
                     Spacer()
                     if userHasGoals == true {
-                        NavigationLink(destination: ContentView()) {
+                        NavigationLink(destination: GoalEditView()) {
                             ButtonView(title: "Goals")
                         }
                     }
                     else {
-                        NavigationLink(destination: ContentView()) {
+                        NavigationLink(destination: GoalEditView()) {
                             ButtonView(title: "Add Goals")
                         }
                     }
@@ -55,6 +55,7 @@ struct IndexView: View {
                     }
                 }
                 .background(Color.black.opacity(showMenu ? 0.5 : 0))
+                
             }
             .toolbar {
                 Button(action: {
