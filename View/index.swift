@@ -1,89 +1,48 @@
-//
-//  index.swift
-//  SamsHealthHub
-//
-//  Created by Cole Clavey on 3/18/24.
-//
 import SwiftUI
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 
 struct IndexView: View {
-    @State private var showMenu: Bool = false
-    @State private var userHasGoals: Bool = false
+    @StateObject var viewModel = UserViewModel()
+    @State private var email = ""
+    @State private var password = ""
+    @State private var isLoggedIn = false
+    @State private var errorMessage: String?
     
     var body: some View {
-        if userHasGoals == true{
-            
-        }
-        else{
-            
-        }
-        
-        
-        
-        NavigationView {
-            ZStack{
-                VStack {
-                    Spacer()
-                    if userHasGoals == true {
-                        NavigationLink(destination: GoalEditView()) {
-                            ButtonView(title: "Goals")
-                        }
-                    }
-                    else {
-                        NavigationLink(destination: GoalEditView()) {
-                            ButtonView(title: "Add Goals")
-                        }
-                    }
-                    
-                    
-                    Spacer()
-                        .frame(height: 20)
-                    
-                    NavigationLink(destination: ItemSearchView()) {
-                        ButtonView(title: "Find Item")
-                    }
-                    
-                    Spacer()
-                }
+        VStack {
+            TextField("Email", text: $email)
                 .padding()
-                
-                GeometryReader { _ in
-                    HStack{
-                        Spacer()
-                        SideMenuView()
-                            .offset(x: showMenu ? 0 : UIScreen.main.bounds.width)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            SecureField("Password", text: $password)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            Button("Login") {
+                viewModel.login(email: email, password: password) { success in
+                    if success {
+                        isLoggedIn = true
+                    } else {
+                        errorMessage = "Failed to log in"
                     }
                 }
-                .background(Color.black.opacity(showMenu ? 0.5 : 0))
-                
             }
-            .toolbar {
-                Button(action: {
-                    self.showMenu.toggle()
-                }) {
-                    Image(systemName: showMenu ? "xmark" : "text.justify")
-                        .font(.title)
-                        .foregroundColor(showMenu ? .red : .primary)
-                }
+            .padding()
+            
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
             }
+        }
+        .padding()
+        .fullScreenCover(isPresented: $isLoggedIn) {
+            HomeView()
         }
     }
 }
 
-
-
-struct ButtonView: View {
-    let title: String
-    
-    var body: some View {
-        Text(title)
-            .font(.title)
-            .foregroundColor(.white)
-            .frame(width: 200, height: 50)
-            .background(Color.blue)
-            .cornerRadius(10)
+struct IndexView_Previews: PreviewProvider {
+    static var previews: some View {
+        IndexView()
     }
 }
-
-
-
