@@ -10,7 +10,7 @@ import SwiftUI
 struct SideMenuView: View {
     var body: some View {
         VStack(spacing: 65) {
-            NavigationLink(destination: IndexView()) {
+            NavigationLink(destination: HomeView()) {
                 Text("Home")
                     .font(.title)
                     .foregroundColor(.white)
@@ -47,6 +47,5 @@ struct SideMenuView: View {
 }
 
 #Preview {
-    SideMenuView() 
+    SideMenuView()
 }
-
