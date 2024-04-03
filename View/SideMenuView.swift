@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct SideMenuView: View {
+    
+    @ObservedObject var uservm = UserViewModel()
+    let currentUser: User?
+    init(currentUser: User?) {
+            self.currentUser = currentUser
+        }
     var body: some View {
         VStack(spacing: 65) {
-            NavigationLink(destination: HomeView()) {
+            NavigationLink(destination: HomeView(currentUser: uservm.currentUser)) {
                 Text("Home")
                     .font(.title)
                     .foregroundColor(.white)
@@ -24,7 +30,7 @@ struct SideMenuView: View {
                     .navigationBarBackButtonHidden(true)
             }
             
-            NavigationLink(destination: GoalEditView()) {
+            NavigationLink(destination: GoalEditView(currentUser: currentUser)) {
                 Text("Change Goal")
                     .font(.title)
                     .foregroundColor(.white)
@@ -38,14 +44,24 @@ struct SideMenuView: View {
                     .navigationBarBackButtonHidden(true)
             }
             
+            NavigationLink(destination: IndexView().navigationBarBackButtonHidden(true)) {
+                Text("Log Out")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    
+            }
+            
             Spacer()
         }
         .padding(16)
         .background(Color.blue)
         .edgesIgnoringSafeArea(.bottom)
+        .onAppear(){
+            print(" from side view menu current user is" + (self.currentUser?.fname ?? "nothing there"))
+        }
     }
 }
 
-#Preview {
-    SideMenuView()
-}
+//#Preview {
+  //  SideMenuView(currentUser: uservm.currentUser)
+//}
