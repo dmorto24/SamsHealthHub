@@ -11,6 +11,8 @@ struct IndexView: View {
     @State private var errorMessage: String?
     
     var body: some View {
+        NavigationView{
+        
         VStack {
             TextField("Email", text: $email)
                 .padding()
@@ -28,21 +30,25 @@ struct IndexView: View {
                 }
             }
             .padding()
-            
-            if let errorMessage = errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
+            NavigationLink(destination: SignUpView()){
+                Text("Sign Up")
             }
         }
         .padding()
         .fullScreenCover(isPresented: $isLoggedIn) {
-            HomeView()
+            HomeView(currentUser: viewModel.currentUser)
         }
+        if let errorMessage = errorMessage {
+            Text(errorMessage)
+                .foregroundColor(.red)
+        }
+
+            
     }
 }
-
 struct IndexView_Previews: PreviewProvider {
-    static var previews: some View {
-        IndexView()
+        static var previews: some View {
+            IndexView()
+        }
     }
 }
