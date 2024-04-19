@@ -37,7 +37,7 @@ struct SideMenuView: View {
                     .navigationBarBackButtonHidden(true)
             }
             
-            NavigationLink(destination: ItemSearchView()) {
+            NavigationLink(destination: ItemSearchView(currentUser: currentUser)) {
                 Text("Find Item")
                     .font(.title)
                     .foregroundColor(.white)

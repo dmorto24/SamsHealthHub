@@ -8,21 +8,19 @@ import SwiftUI
 //import UIKit
 
 struct HomeView: View {
-    
+    let currentUser: User?
     @State private var showMenu: Bool = false
-    
+
     @State private var userHasGoals: Bool = true
-    //HERE ARE THE DUMMIES, I HATE YOU DUMMIES PLEASE KYS AND DIE
     @State private var userGoal = [Goal]()
-    @State private var caloriesPreference = "High"
+    @State private var caloriesPreference = "No Preference"
     @State private var carbsPreference = "No Preference"
     @State private var cholesterolPreference = "No Preference"
     @State private var fatPreference = "No Preference"
     @State private var proteinPreference = "No Preference"
     @State private var sodiumPreference = "No Preference"
     
-    @ObservedObject var uservm = UserViewModel()
-    let currentUser: User?
+    @StateObject var uservm = UserViewModel()
     init(currentUser: User?) {
             self.currentUser = currentUser
         }
@@ -159,7 +157,7 @@ struct HomeView: View {
                     }
                     Spacer()
                         .frame(height: 20)
-                    NavigationLink(destination: ItemSearchView()) {
+                    NavigationLink(destination: ItemSearchView(currentUser: currentUser)) {
                         ButtonView(title: "Find Item")
                     }
                     Spacer()
