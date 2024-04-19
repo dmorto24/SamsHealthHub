@@ -49,7 +49,9 @@ class ItemViewModel: ObservableObject {
                             let cholesterol = data["cholesterol"] as? Int ?? 0
                             let fat = data["fat"] as? Int ?? 0
                             let protein = data["protein"] as? Int ?? 0
+                            
                             let sodium = data["sodium"] as? Int ?? 0
+                            let type = data["type"] as? String ?? ""
 
                             let carbCals = carbs * 4
                             let fatCals = fat * 9
@@ -62,42 +64,42 @@ class ItemViewModel: ObservableObject {
                             var sodiumResult: String
                             
                             if Double(calories) <= 300 {
-                                calorieResult = "Low"
+                                calorieResult = "low"
                             } else {
-                                calorieResult = "High"
+                                calorieResult = "high"
                             }
 
                             if (Double(carbCals) / Double(calories)) <= 0.65 {
-                                carbResult = "Low"
+                                carbResult = "low"
                             } else {
-                                carbResult = "High"
+                                carbResult = "high"
                             }
 
                             if cholesterol <= 200 {
-                                cholesterolResult = "Low"
+                                cholesterolResult = "low"
                             } else {
-                                cholesterolResult = "High"
+                                cholesterolResult = "high"
                             }
 
                             if (Double(fatCals) / Double(calories)) <= 0.30 {
-                                fatResult = "Low"
+                                fatResult = "low"
                             } else {
-                                fatResult = "High"
+                                fatResult = "high"
                             }
 
                             if (Double(proteinCals) / Double(calories)) <= 0.40 {
-                                proteinResult = "Low"
+                                proteinResult = "low"
                             } else {
-                                proteinResult = "High"
+                                proteinResult = "high"
                             }
 
                             if sodium <= 350 {
-                                sodiumResult = "Low"
+                                sodiumResult = "low"
                             } else {
-                                sodiumResult = "High"
+                                sodiumResult = "high"
                             }
 
-                            let itemInformation = Information(id: document.documentID, iid: iid, calories: calories, calorieThresh: calorieResult, carbs: carbs, carbThresh: carbResult, cholesterol: cholesterol, cholesterolThresh: cholesterolResult, fat: fat, fatThresh: fatResult, protein: protein, proteinThresh: proteinResult, sodium: sodium, sodiumThresh: sodiumResult)
+                            let itemInformation = Information(id: document.documentID, iid: iid, calories: calories, calorieThresh: calorieResult, carbs: carbs, carbThresh: carbResult, cholesterol: cholesterol, cholesterolThresh: cholesterolResult, fat: fat, fatThresh: fatResult, protein: protein, proteinThresh: proteinResult, sodium: sodium, sodiumThresh: sodiumResult, type: type)
 
                             completion(itemInformation)
                             return
@@ -113,6 +115,126 @@ class ItemViewModel: ObservableObject {
         }
     }
 
+    
+    func alternateItems(calorieGoal: String, carbGoal: String, cholesterolGoal: String, fatGoal: String, proteinGoal: String, sodiumGoal: String, matches: Int, type: String, item: ItemModel, completion: @escaping ([Information]?, [ItemModel]?, Error?) -> Void) {
+        let db = Firestore.firestore()
+        let itemInfoCollection = db.collection("Information")
+        let query = itemInfoCollection.whereField("type", isEqualTo: type)
+        
+        query.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching items: \(error)")
+                completion(nil, nil, error)
+                return
+            }
+            
+            var items: [ItemModel] = []
+            var information: [Information] = []
+            
+            if let documents = snapshot?.documents {
+                for document in documents {
+                    let data = document.data()
+                    if let iidRef = data["iid"] as? DocumentReference {
+                        let iid = iidRef.documentID
+                        if iid == item.id {
+                            print("Original Item")
+                        } else {
+                            let calories = data["calories"] as? Int ?? 0
+                            let carbs = data["carbs"] as? Int ?? 0
+                            let cholesterol = data["cholesterol"] as? Int ?? 0
+                            let fat = data["fat"] as? Int ?? 0
+                            let protein = data["protein"] as? Int ?? 0
+                            let sodium = data["sodium"] as? Int ?? 0
+                            //PERFORM THRESH CALCULATIONS
+                            let carbCals = carbs * 4
+                            let fatCals = fat * 9
+                            let proteinCals = protein * 4
+                            var calorieResult: String
+                            var carbResult: String
+                            var cholesterolResult: String
+                            var fatResult: String
+                            var proteinResult: String
+                            var sodiumResult: String
+                        
+                            if Double(calories) <= 300 {
+                                calorieResult = "low"
+                            } else {
+                                calorieResult = "high"
+                            }
+
+                            if (Double(carbCals) / Double(calories)) <= 0.65 {
+                                carbResult = "low"
+                            } else {
+                                carbResult = "high"
+                            }
+
+                            if cholesterol <= 200 {
+                                cholesterolResult = "low"
+                            } else {
+                                cholesterolResult = "high"
+                            }
+
+                            if (Double(fatCals) / Double(calories)) <= 0.30 {
+                                fatResult = "low"
+                            } else {
+                                fatResult = "high"
+                            }
+
+                            if (Double(proteinCals) / Double(calories)) <= 0.40 {
+                                proteinResult = "low"
+                            } else {
+                                proteinResult = "high"
+                            }
+
+                            if sodium <= 350 {
+                                sodiumResult = "low"
+                            } else {
+                                sodiumResult = "high"
+                            }
+
+                            
+                            let info = Information(id: document.documentID, iid: iid, calories: calories, calorieThresh: calorieResult, carbs: carbs, carbThresh: carbResult, cholesterol: cholesterol, cholesterolThresh: cholesterolResult, fat: fat, fatThresh: fatResult, protein: protein, proteinThresh: proteinResult, sodium: sodium, sodiumThresh: sodiumResult, type: type)
+                            
+                            information.append(info)
+                        }
+                    }
+                }
+                
+                let itemCollection = db.collection("Items")
+                let iidReferences = information.map { $0.iid }
+                let itemQuery = itemCollection.whereField(FieldPath.documentID(), in: iidReferences)
+                itemQuery.getDocuments { itemSnapshot, itemError in
+                    if let itemError = itemError {
+                        print("Error fetching item names: \(itemError)")
+                        completion(nil, nil, itemError)
+                        return
+                    }
+                    
+                    if let itemDocuments = itemSnapshot?.documents {
+                        print("Items Exist")
+                        for itemDocument in itemDocuments {
+                            print("A")
+                            let data = itemDocument.data()
+                            let id = itemDocument.documentID
+                            let name = data["name"] as? String ?? ""
+                            print("Name: \(name)")
+                            let description = data["description"] as? String ?? ""
+                            let item = ItemModel(id: id, name: name, description: description)
+                            items.append(item)
+                        }
+                    }
+                    
+                    // Call the completion handler with the array of fetched items
+                    completion(information, items, nil)
+                }
+            }
+        }
+    }
+
+
+
+
+    
     func filteredItems(for searchText: String) -> [ItemModel] {
         if searchText.isEmpty {
             return list
